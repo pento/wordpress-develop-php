@@ -1,4 +1,4 @@
-FROM php:fpm
+FROM php:5.4-fpm
 
 # install the PHP extensions we need
 RUN set -ex; \
@@ -12,4 +12,4 @@ RUN set -ex; \
 	; \
 	\
 	docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr; \
-	docker-php-ext-install gd mysqli opcache zip;
+	docker-php-ext-install gd mysqli zip;
