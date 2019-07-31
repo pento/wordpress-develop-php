@@ -1,4 +1,4 @@
-FROM php:7.3-fpm
+FROM php:5.5-fpm
 
 ##########################################################################
 #
@@ -18,9 +18,9 @@ RUN set -ex; \
 	; \
 	\
 	docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr; \
-	docker-php-ext-install gd opcache mysqli zip; \
+	docker-php-ext-install gd mysql mysqli zip; \
 	\
-	pecl install xdebug-2.7.2;
+	pecl install xdebug-2.5.5;
 
 COPY entrypoint.sh /entrypoint.sh
 
