@@ -97,6 +97,7 @@ $entrypoint = file_get_contents( 'entrypoint.sh' );
 foreach ( $php_versions as $version => $config ) {
 	echo "-----\n$version\n-----\n";
 	if ( 'latest' === $version ) {
+		$branch_exists = true;
 		echo "Checkout master\n";
 		echo shell_exec( 'git checkout master' );
 	} else {
@@ -163,5 +164,9 @@ foreach ( $php_versions as $version => $config ) {
 	echo "Commit changed files\n";
 	echo shell_exec( "git commit -m 'Update the image for PHP $version.'" );
 	echo "Push changes\n";
-	echo shell_exec( 'git push' );
+	if ( $branch_exists ) {
+		echo shell_exec( 'git push' );
+	} else {
+		echo shell_exec( "git push --set-upstream origin $version-fpm" );
+	}
 }
