@@ -59,6 +59,8 @@ $php_versions = array(
 	),
 );
 
+$php_versions['latest'] = $php_versions[ $latest ];
+
 $generated_warning = <<<EOT
 ##########################################################################
 #
@@ -145,5 +147,6 @@ foreach ( $php_versions as $version => $config ) {
 	fwrite( $fh, $entrypoint );
 	fclose( $fh );
 
+	echo shell_exec( 'git add -A' );
 	echo shell_exec( "git commit -m 'Update the image for PHP $version.'" );
 }
