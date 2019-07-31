@@ -162,4 +162,6 @@ foreach ( $php_versions as $version => $config ) {
 	echo shell_exec( 'git add -A' );
 	echo "Commit changed files\n";
 	echo shell_exec( "git commit -m 'Update the image for PHP $version.'" );
+	echo "Push changes\n";
+	echo shell_exec( 'git push' );
 }
