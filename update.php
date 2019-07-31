@@ -95,16 +95,18 @@ $template   = file_get_contents( 'Dockerfile.template' );
 $entrypoint = file_get_contents( 'entrypoint.sh' );
 
 foreach ( $php_versions as $version => $config ) {
-	$branch_exists = shell_exec( "git ls-remote --heads git@github.com:garypendergast/wordpress-develop-php.git $version-fpm" );
-	if ( ! $branch_exists ) {
-		echo shell_exec( 'git checkout master' );
-		echo shell_exec( "git checkout -b $version-fpm" );
-		echo shell_exec( "git rm Dockerfile.template update.php" );
-		echo shell_exec( "git commit -m 'Creating a new branch for PHP $version.'" );
-	} elseif ( 'latest' === $version ) {
+	if ( 'latest' === $version ) {
 		echo shell_exec( 'git checkout master' );
 	} else {
-		echo shell_exec( "git checkout $version-fpm" );
+		$branch_exists = shell_exec( "git ls-remote --heads git@github.com:garypendergast/wordpress-develop-php.git $version-fpm" );
+		if ( ! $branch_exists ) {
+			echo shell_exec( 'git checkout master' );
+			echo shell_exec( "git checkout -b $version-fpm" );
+			echo shell_exec( "git rm Dockerfile.template update.php" );
+			echo shell_exec( "git commit -m 'Creating a new branch for PHP $version.'" );
+		} else {
+			echo shell_exec( "git checkout $version-fpm" );
+		}
 	}
 
 	$dockerfile = $template;
