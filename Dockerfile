@@ -28,4 +28,4 @@ RUN chmod +x /entrypoint.sh
 
 ENTRYPOINT [ "/entrypoint.sh" ]
 
-CMD [ "php", "-a" ]
+CMD [ "php-fpm" ]
